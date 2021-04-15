@@ -1,11 +1,14 @@
 package interfaceGui;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoardSquare {
 	
 	/* Attributes */
+	int w = Layout.w, h = Layout.h;
 	private int iD;
 	private int xOnBoard;
 	private int yOnBoard;
@@ -22,6 +25,46 @@ public class BoardSquare {
 		this.listOfPawnOn = new ArrayList<Pawn>(2);
 		this.nbPawnOn = 0;
 	}
+	
+	public void drawBoardSquare(Graphics g) {
+		
+		int player = this.iD/100;
+		
+		if(player == 1 || this.iD == 2) {
+			g.setColor(Color.BLUE);
+		}else if(player == 2 || this.iD == 15) {
+			g.setColor(Color.YELLOW);
+		}else if(player == 3 || this.iD == 28) {
+			g.setColor(Color.RED);
+		}else if(player == 4 || this.iD == 41) { 
+			g.setColor(Color.GREEN);
+		}else {
+			g.setColor(Color.WHITE);
+		}
+		
+		if(this.nbPawnOn == 2) {
+			g.setColor(Color.MAGENTA);
+		}
+		
+		if(this.nbPawnOn > 2) {
+			g.setColor(Color.PINK);
+		}
+		
+		if(this.nbPawnOn < 0) {
+			g.setColor(Color.CYAN);
+		}
+		
+		if(this.nbPawnOn == 1) {
+			g.setColor(Color.ORANGE);
+		}
+		
+		g.fillRect(this.xOnBoard, this.yOnBoard, w, h);
+		g.setColor(Color.BLACK);
+		g.drawRect(this.xOnBoard, this.yOnBoard, w, h);
+	}
+	
+	
+	
 	
 	
 	/* Methods */

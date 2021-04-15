@@ -96,7 +96,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 					addLogsAndNotification("Player "+this.currentPlayer+" roll a " + this.diceNumber);
 					
 					this.currentPlayer = firstPlayer(this.boardPanel.getPlayers().get(0).getFirstRoll(), this.boardPanel.getPlayers().get(1).getFirstRoll(), this.boardPanel.getPlayers().get(2).getFirstRoll(), this.boardPanel.getPlayers().get(3).getFirstRoll());
-					addLogsAndNotification("Player nÂ°"+this.currentPlayer+" is the first to play");
+					addLogsAndNotification("Player n°"+this.currentPlayer+" is the first to play");
 					this.diceNumber = 0;
 					this.buttonsPanel.diceLabel.setText("" + this.diceNumber);
 					manage = 20;
@@ -245,6 +245,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 			pawn.setCurrentSquare(player.getStartSquare());
 			pawn.setHitBox();
 			player.getStartSquare().setNbPawnOn(2);
+			addLogsAndNotification("Player n°"+player.getPlayerID()+" ");
 			this.manage = 20;
 
 		} else if (player.getStartSquare().HowManyPawn() == 1 && player.getStartSquare().getIdOfPlayerOn() != player.getPlayerID()) {

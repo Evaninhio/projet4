@@ -19,7 +19,7 @@ public class BoardPanel extends JPanel{
 	/* Constructors */
 	public BoardPanel() {
 
-		this.layout = new Layout(30, 30, 50);
+		this.layout = new Layout(30, 30, 25);
 		this.setPath(new Path());
 
 		this.setPlayers(new ArrayList<Player>(4));
@@ -36,11 +36,33 @@ public class BoardPanel extends JPanel{
 
 	public void paintComponent(Graphics g) {
 
-		this.layout.draw(g); 
-		
-		for(Player player : getPlayers()) { 
-			player.DrawPlayer(g); 
+		for(int i=0;i<52;i++) {
+			this.path.getPathMap().get(i).drawBoardSquare(g);
 		}
+		
+		for(Player player : this.getPlayers()) { 
+			
+			player.DrawPlayer(g);
+			
+			player.getStartSquare().drawBoardSquare(g);
+			
+			for(int i=0;i<4;i++) {
+				player.getHomeSquare().get(i).drawBoardSquare(g);
+			}
+			
+			for(int i=1;i<6;i++) {
+				player.getFinalSquare().get(player.getPlayerID()*100+10+i).drawBoardSquare(g);
+			}
+			
+		}
+		
+		
+		for(Player player : this.getPlayers()) {
+			for(Pawn pawn : player.getPawn()) {
+				pawn.DrawPawn(g, player);
+			}
+		}
+		this.layout.draw(g);
 	}
 
 	

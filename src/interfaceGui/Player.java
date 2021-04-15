@@ -88,24 +88,41 @@ public class Player{
 		switch(this.playerID) {
 		case 1:
 			g.setColor(Color.BLUE);
+			g.fillRect(offset, offset, 6*w, 6*h);
+			g.clearRect(offset+w, offset+h, 4*w, 4*h);
+			
+			int[] xBluePolygon = {offset+6*w, offset+6*w, offset+(15*w)/2};
+			int[] yBluePolygon = {offset+6*h, offset+9*h, offset+(15*h)/2};
+			g.fillPolygon(xBluePolygon,yBluePolygon,3);
 			break;
 		case 2:
 			g.setColor(Color.YELLOW);
+			g.fillRect(offset+9*w+1, offset, 6*w, 6*h);
+			g.clearRect(offset+10*w, offset+h, 4*w, 4*h);
+
+			int[] xYellowPolygon = {offset+6*w, offset+9*w, offset+(15*w)/2};
+			int[] yYellowPolygon = {offset+6*h, offset+6*h, offset+(15*h)/2};
+			g.fillPolygon(xYellowPolygon,yYellowPolygon,3);
 			break;
 		case 3:
 			g.setColor(Color.RED);
+			g.fillRect(offset+9*w+1, offset+9*h+1, 6*w, 6*h);
+			g.clearRect(offset+10*w, offset+10*h, 4*w, 4*h);
+			
+			int[] xRedPolygon = {offset+9*w, offset+9*w, offset+(15*w)/2};
+			int[] yRedPolygon = {offset+6*h, offset+9*h, offset+(15*h)/2};
+			g.fillPolygon(xRedPolygon,yRedPolygon,3);
 			break;
 		case 4:
 			g.setColor(Color.GREEN);
+			g.fillRect(offset, offset+9*h+1, 6*w, 6*h);
+			g.clearRect(offset+w, offset+10*h, 4*w, 4*h);
+			
+			int[] xGreenPolygon = {offset+9*w, offset+6*w, offset+(15*w)/2};
+			int[] yGreenPolygon = {offset+9*h, offset+9*h, offset+(15*h)/2};
+			g.fillPolygon(xGreenPolygon,yGreenPolygon,3);
+			g.setColor(Color.GREEN);
 			break;
-		}
-		g.fillRect(this.homeSquare.get(0).getxOnBoard(), this.homeSquare.get(0).getyOnBoard(), w, h);
-		g.fillRect(this.homeSquare.get(1).getxOnBoard(), this.homeSquare.get(1).getyOnBoard(), w, h);
-		g.fillRect(this.homeSquare.get(2).getxOnBoard(), this.homeSquare.get(2).getyOnBoard(), w, h);
-		g.fillRect(this.homeSquare.get(3).getxOnBoard(), this.homeSquare.get(3).getyOnBoard(), w, h);
-		
-		for(Pawn pawn : this.getPawn()) {
-			pawn.DrawPawn(g, this);
 		}
 	}
 
