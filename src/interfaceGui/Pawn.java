@@ -33,10 +33,13 @@ public class Pawn{
 		return this.nbSquareTraveled+diceValue > 50;
 	}
 	
-	
-	
 	public void setHitBox() {
 		this.hitBox = new Rectangle(this.currentSquare.getxOnBoard(), this.currentSquare.getyOnBoard(),w, h);
+	}
+	
+	public void moveHitBox() {
+		this.hitBox.x = this.currentSquare.getxOnBoard();
+		this.hitBox.y = this.currentSquare.getyOnBoard();
 	}
 	
 	

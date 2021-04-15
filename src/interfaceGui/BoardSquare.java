@@ -17,12 +17,14 @@ public class BoardSquare {
 	private List<Pawn> listOfPawnOn;
 	
 	
+	
+
 	/* Constructor */
 	public BoardSquare(int NewXOnBoard, int NewYOnBoard, int iD) {
 		this.setiD(iD);
 		this.setxOnBoard(NewXOnBoard);
 		this.setyOnBoard(NewYOnBoard);
-		this.listOfPawnOn = new ArrayList<Pawn>(2);
+		this.setListOfPawnOn(new ArrayList<Pawn>(2));
 		this.nbPawnOn = 0;
 	}
 	
@@ -89,8 +91,12 @@ public class BoardSquare {
 	public void removePawn() {
 		
 		this.listOfPawnOn.remove(this.listOfPawnOn.size()-1);
+		
 		this.setNbPawnOn(this.HowManyPawn()-1);
-		if (this.HowManyPawn() == 0) this.setIdOfPlayerOn(0);
+		
+		if (this.HowManyPawn() == 0) {
+			this.setIdOfPlayerOn(0);
+		}
 		
 	}
 	
@@ -146,8 +152,15 @@ public class BoardSquare {
 		}
 	}
 
-
 	public void setIdOfPlayerOn(int idOfPlayerOn) {
 		this.idOfPlayerOn = idOfPlayerOn;
+	}
+	
+	public List<Pawn> getListOfPawnOn() {
+		return listOfPawnOn;
+	}
+
+	public void setListOfPawnOn(List<Pawn> listOfPawnOn) {
+		this.listOfPawnOn = listOfPawnOn;
 	}
 }
