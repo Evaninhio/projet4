@@ -110,7 +110,8 @@ public class BoardSquare {
 	
 	
 	public String ToString() {
-		return "iD = "+this.getiD()+" nbPawnOn = "+this.HowManyPawn()+" IdOfPlayerOn = "+this.getIdOfPlayerOn();
+		return "iD = "+this.getiD()+" nbPawnOn = "+this.HowManyPawn()+" IdOfPlayerOn = "+this.getIdOfPlayerOn()+"\n"
+				+" sizeOfList = "+this.getListOfPawnOn().size();
 	}
 	
 	

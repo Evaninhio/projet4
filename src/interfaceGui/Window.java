@@ -66,6 +66,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		
 		this.setVisible(true);
 		this.manage=0;
+		
 	}
 
 	/***
@@ -86,7 +87,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 					this.boardPanel.getPlayers().get(this.currentPlayer-1).setFirstRoll(this.diceNumber);
 					addLogsAndNotification("Player "+this.currentPlayer+" roll a " + this.diceNumber);
 					this.currentPlayer++;
-					addLogsAndNotification("it's the turn of player " + this.currentPlayer);
+					addLogsAndNotification("It's the turn of player " + this.currentPlayer);
 				
 				}else if(this.currentPlayer == 4) {
 					
@@ -127,7 +128,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 				this.diceNumber = 0;
 				this.buttonsPanel.diceLabel.setText("" + this.diceNumber);
 				this.currentPlayer = 1;
-				addLogsAndNotification("it's the turn of player " + this.currentPlayer);
+				addLogsAndNotification("It's the turn of player " + this.currentPlayer);
 				this.topPanel.startGame.setVisible(false);
 				manage=10;
 			}
@@ -142,7 +143,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	
 	/****
 	 *
-	 * set the attribute dicenumber of this class with a random number between 1 and 6
+	 * set the attribute dice number of this class with a random number between 1 and 6
 	 *
 	 */
 
@@ -190,6 +191,9 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		this.topPanel.notification.setText(str);
 	}
 	
+	
+	
+	
 	/***
 	 *
 	 * @param e: the mouse click
@@ -197,58 +201,61 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 * if we detect a click in a paw we move it but if we have a 6 we can out a paw of the home
 	 * 
 	 */
+	
+	//repère
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		if(manage==30) {
-			
-			Point point = e.getPoint();
-			Player currentPlayer = this.boardPanel.getPlayers().get(this.currentPlayer-1);
-			Pawn currentPawn = null;
-			Boolean pawnSelected = false;
-			
-			/* Find the pawn clicked */
-			
-			if(currentPlayer.getPawn().get(0).getHitBox().contains(point)) {
-				currentPawn = currentPlayer.getPawn().get(0);
-				pawnSelected = true;
-				
-			}else if(currentPlayer.getPawn().get(1).getHitBox().contains(point)) {
-				currentPawn = currentPlayer.getPawn().get(1);
-				pawnSelected = true;
-				
-			}else if(currentPlayer.getPawn().get(2).getHitBox().contains(point)) {
-				currentPawn = currentPlayer.getPawn().get(2);
-				pawnSelected = true;
-				
-			}else if(currentPlayer.getPawn().get(3).getHitBox().contains(point)) {
-				currentPawn = currentPlayer.getPawn().get(3);
-				pawnSelected = true;
-			}
-			
-			
-			
-			if (pawnSelected) { //If a pawn is selected
-				
-				if(currentPawn.isAtHome()) { //if the pawn selected is at home
-					
-					if(diceto6()) { //If the player rolled a 6
-						moveOutOfHomePawn(currentPawn, currentPlayer);
-
-						
-					}else {	//If the player rolled another number than 6
-						addLogsAndNotification("Sorry you can't get out of home a pawn, you may roll a 6");
-					}
-					
-				}else { //If the pawn selected is on the path	
-					moveForwardPawn(currentPawn, currentPlayer);
-					
-				}
-			}
-			
-			this.repaint();
-		}
 	}
+//		if(manage==30) {
+//			
+//			Point point = e.getPoint();
+//			Player currentPlayer = this.boardPanel.getPlayers().get(this.currentPlayer-1);
+//			Pawn currentPawn = null;
+//			Boolean pawnSelected = false;
+//			
+//			/* Find the pawn clicked */
+//			
+//			if(currentPlayer.getPawn().get(0).getHitBox().contains(point)) {
+//				currentPawn = currentPlayer.getPawn().get(0);
+//				pawnSelected = true;
+//				
+//			}else if(currentPlayer.getPawn().get(1).getHitBox().contains(point)) {
+//				currentPawn = currentPlayer.getPawn().get(1);
+//				pawnSelected = true;
+//				
+//			}else if(currentPlayer.getPawn().get(2).getHitBox().contains(point)) {
+//				currentPawn = currentPlayer.getPawn().get(2);
+//				pawnSelected = true;
+//				
+//			}else if(currentPlayer.getPawn().get(3).getHitBox().contains(point)) {
+//				currentPawn = currentPlayer.getPawn().get(3);
+//				pawnSelected = true;
+//			}
+//			
+//			
+//			
+//			if (pawnSelected) { //If a pawn is selected
+//				
+//				if(currentPawn.isAtHome()) { //if the pawn selected is at home
+//					
+//					if(diceto6()) { //If the player rolled a 6
+//						moveOutOfHomePawn(currentPawn, currentPlayer);
+//
+//						
+//					}else {	//If the player rolled another number than 6
+//						addLogsAndNotification("Sorry you can't get out of home a pawn, you may roll a 6");
+//					}
+//					
+//				}else { //If the pawn selected is on the path	
+//					moveForwardPawn(currentPawn, currentPlayer);
+//					
+//				}
+//			}
+//			
+//			this.repaint();
+//		}
+//	}
 	
 	/****
 	 *
@@ -257,33 +264,34 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 * Move a pawn out of home, in the start square
 	 *
 	 */
-	public void moveOutOfHomePawn(Pawn pawn, Player player) {
-
-		if (player.getStartSquare().HowManyPawn() == 2) {
-			System.out.println("There is a Block on your start square");
-		} else if (player.getStartSquare().HowManyPawn() == 1 && player.getStartSquare().getIdOfPlayerOn() == player.getPlayerID()) {
-			pawn.setCurrentSquare(player.getStartSquare());
-			pawn.setHitBox();
-			player.getStartSquare().setNbPawnOn(2);
-			addLogsAndNotification("Player n°"+player.getPlayerID()+" ");
-			this.manage = 20;
-
-		} else if (player.getStartSquare().HowManyPawn() == 1 && player.getStartSquare().getIdOfPlayerOn() != player.getPlayerID()) {
-			player.getStartSquare().eatOppositPawn();
-			pawn.setCurrentSquare(player.getStartSquare());
-			pawn.setHitBox();
-			player.getStartSquare().setNbPawnOn(2);
-			pawn.getCurrentSquare().setIdOfPlayerOn(player.getPlayerID());
-			this.manage = 20;
-
-		} else if (player.getStartSquare().HowManyPawn() == 0) {
-			pawn.setCurrentSquare(player.getStartSquare());
-			pawn.setHitBox();
-			player.getStartSquare().setNbPawnOn(1);
-			pawn.getCurrentSquare().setIdOfPlayerOn(player.getPlayerID());
-			this.manage = 20;
-		}
-	}
+	
+	
+//	public void moveOutOfHomePawn(Pawn pawn, Player player) {
+//
+//		if (player.getStartSquare().HowManyPawn() == 2) {
+//		} else if (player.getStartSquare().HowManyPawn() == 1 && player.getStartSquare().getIdOfPlayerOn() == player.getPlayerID()) {
+//			pawn.setCurrentSquare(player.getStartSquare());
+//			pawn.setHitBox();
+//			player.getStartSquare().setNbPawnOn(2);
+//			addLogsAndNotification("Player n°"+player.getPlayerID()+" ");
+//			this.manage = 20;
+//
+//		} else if (player.getStartSquare().HowManyPawn() == 1 && player.getStartSquare().getIdOfPlayerOn() != player.getPlayerID()) {
+//			player.getStartSquare().eatOppositPawn();
+//			pawn.setCurrentSquare(player.getStartSquare());
+//			pawn.setHitBox();
+//			player.getStartSquare().setNbPawnOn(2);
+//			pawn.getCurrentSquare().setIdOfPlayerOn(player.getPlayerID());
+//			this.manage = 20;
+//
+//		} else if (player.getStartSquare().HowManyPawn() == 0) {
+//			pawn.setCurrentSquare(player.getStartSquare());
+//			pawn.setHitBox();
+//			player.getStartSquare().setNbPawnOn(1);
+//			pawn.getCurrentSquare().setIdOfPlayerOn(player.getPlayerID());
+//			this.manage = 20;
+//		}
+//	}
 
 
 	
@@ -294,6 +302,8 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 * @return true if the pawn is a pawn of the player
 	 * 
 	 */
+	
+	
 	public boolean isOppositePawnOnTargetSquare(Player player, BoardSquare targetSquare) {
 		return targetSquare.HowManyPawn()>0 && targetSquare.getIdOfPlayerOn() != player.getPlayerID();
 	}
@@ -312,7 +322,6 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		Path path = this.boardPanel.getPath();
 
 		for(int i=1; i<this.diceNumber+1; i++) {
-			System.out.println((pawn.getCurrentSquare().getiD()+i)%52);
 			if(path.getPathMap().get((pawn.getCurrentSquare().getiD()+i)%52).HowManyPawn() == 2 && path.getPathMap().get((pawn.getCurrentSquare().getiD()+i)%52).getIdOfPlayerOn() != pawn.getPlayerID()) {
 				return true;
 			}
@@ -330,49 +339,49 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 *
 	 */
 	
-	public void moveForwardPawn(Pawn pawn, Player player) {
-
-		if (isBlockOnWay(pawn)) {    //If the way is blocked then the pawn can't be move forward
-			System.out.println("A Block blocked the path");
-		} else {
-
-				int indexTargetSquare = (this.diceNumber + pawn.getCurrentSquare().getiD()) % 52;
-				BoardSquare targetSquare = this.boardPanel.getPath().getPathMap().get(indexTargetSquare);
-
-				if (isOppositePawnOnTargetSquare(player, targetSquare)) {  //If there is an opposite pawn on the target square
-
-					targetSquare.eatOppositPawn();
-					pawn.getCurrentSquare().removePawn();
-					pawn.setCurrentSquare(targetSquare);
-					pawn.setHitBox();
-					pawn.setNbSquareTraveled(pawn.getNbSquareTraveled() + this.diceNumber);
-
-				} else if (pawn.hasAllPathTraveled(this.diceNumber)) {    //If the pawn has traveled the complete path
-
-					if (pawn.getCurrentSquare().getiD() + this.diceNumber <= 100 * player.getPlayerID() + 16) {        //If the target square is not out of the limit of the final line of the player
-						indexTargetSquare = (100 * player.getPlayerID()) + 10 + ((pawn.getNbSquareTraveled() + this.diceNumber) - 50);
-						targetSquare = player.getFinalSquare().get(indexTargetSquare);
-						pawn.getCurrentSquare().removePawn();
-						pawn.setCurrentSquare(targetSquare);
-						pawn.setHitBox();
-						pawn.setNbSquareTraveled(pawn.getNbSquareTraveled() + this.diceNumber);
-					}
-
-
-				} else {        //If it is a simple forward movement without any other action on the way
-					pawn.getCurrentSquare().removePawn();
-					pawn.setCurrentSquare(targetSquare);
-					pawn.setHitBox();
-					pawn.setNbSquareTraveled(pawn.getNbSquareTraveled() + this.diceNumber);
-				}
-
-			if (diceto6()) {
-				this.manage = 20;
-			} else {
-				nextPlayer();
-			}
-		}
-	}
+//	public void moveForwardPawn(Pawn pawn, Player player) {
+//
+//		if (isBlockOnWay(pawn)) {    //If the way is blocked then the pawn can't be move forward
+//			System.out.println("A Block blocked the path");
+//		} else {
+//
+//				int indexTargetSquare = (this.diceNumber + pawn.getCurrentSquare().getiD()) % 52;
+//				BoardSquare targetSquare = this.boardPanel.getPath().getPathMap().get(indexTargetSquare);
+//
+//				if (isOppositePawnOnTargetSquare(player, targetSquare)) {  //If there is an opposite pawn on the target square
+//
+//					targetSquare.eatOppositPawn();
+//					pawn.getCurrentSquare().removePawn();
+//					pawn.setCurrentSquare(targetSquare);
+//					pawn.setHitBox();
+//					pawn.setNbSquareTraveled(pawn.getNbSquareTraveled() + this.diceNumber);
+//
+//				} else if (pawn.hasAllPathTraveled(this.diceNumber)) {    //If the pawn has traveled the complete path
+//
+//					if (pawn.getCurrentSquare().getiD() + this.diceNumber <= 100 * player.getPlayerID() + 16) {        //If the target square is not out of the limit of the final line of the player
+//						indexTargetSquare = (100 * player.getPlayerID()) + 10 + ((pawn.getNbSquareTraveled() + this.diceNumber) - 50);
+//						targetSquare = player.getFinalSquare().get(indexTargetSquare);
+//						pawn.getCurrentSquare().removePawn();
+//						pawn.setCurrentSquare(targetSquare);
+//						pawn.setHitBox();
+//						pawn.setNbSquareTraveled(pawn.getNbSquareTraveled() + this.diceNumber);
+//					}
+//
+//
+//				} else {        //If it is a simple forward movement without any other action on the way
+//					pawn.getCurrentSquare().removePawn();
+//					pawn.setCurrentSquare(targetSquare);
+//					pawn.setHitBox();
+//					pawn.setNbSquareTraveled(pawn.getNbSquareTraveled() + this.diceNumber);
+//				}
+//
+//			if (diceto6()) {
+//				this.manage = 20;
+//			} else {
+//				nextPlayer();
+//			}
+//		}
+//	}
 	
 	/****
 	 *
@@ -386,7 +395,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		}else {
 			this.currentPlayer = 1;
 		}
-		addLogsAndNotification("it's the turn of player " + this.currentPlayer);
+		addLogsAndNotification("It's the turn of player " + this.currentPlayer);
 		this.manage = 20;
 	}
 	
@@ -488,19 +497,31 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	public void move(Pawn pawn, int IDSquare){
 		
 		BoardSquare targetSquare = null;
+		BoardSquare old = pawn.getCurrentSquare();
 		
-		if(IDSquare>52){
-			 targetSquare = this.boardPanel.getPlayers().get(this.currentPlayer-1).getFinalSquare().get(IDSquare);
+		System.out.println("Pawn to move = "+pawn.ToString());
+		System.out.println("Id of target square = "+IDSquare);		
+		
+		System.out.println("old = "+old.ToString());
+		if(IDSquare/100 > 0 && IDSquare%100 > 10){
+			targetSquare = this.boardPanel.getPlayers().get(this.currentPlayer-1).getFinalSquare().get(IDSquare);
+		}else if(IDSquare > 100 && IDSquare < 105){
+			targetSquare = pawn.getHomeSquare();
+		}else if(IDSquare > 200 && IDSquare < 205){
+			targetSquare = pawn.getHomeSquare();
+		}else if(IDSquare > 300 && IDSquare < 305){
+			targetSquare = pawn.getHomeSquare();
+		}else if(IDSquare > 400 && IDSquare < 405){
+			targetSquare = pawn.getHomeSquare();
 		}else {
-			 targetSquare = this.boardPanel.getPath().getPathMap().get(IDSquare);
+			targetSquare = this.boardPanel.getPath().getPathMap().get(IDSquare);
 		}
-		
-		
+		System.out.println("target = "+targetSquare.ToString());
 		pawn.getCurrentSquare().removePawn();
 		pawn.setCurrentSquare(targetSquare);
 		pawn.setHitBox();
-		
-		
+		System.out.println("new = "+pawn.getCurrentSquare().ToString());
+		System.out.println("old2 = "+old.ToString());
 	}
 	
 	
@@ -576,16 +597,38 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	}
 	
 	
+	/****
+	 *
+	 * @param pawn
+	 * 
+	 * move the pawn to his home square
+	 *
+	 */
 	
-	
-	public void eat() {
+	public void moveAtHome(Pawn pawn) {
 		
-	}
-	
-	public void moveAtHome() {
-		
+		move(pawn, pawn.getHomeSquare().getiD());
+		pawn.setNbSquareTraveled(0);
+		addLogsAndNotification("Pawn n°"+pawn.getPawnID()+" of player n°"+pawn.getPlayerID()+"is back at home");
 	}
 
+	
+	/****
+	 *
+	 * @param target
+	 * 
+	 * return the pawn of the target square in parameter to his home square
+	 *
+	 */
+	
+	
+	public void eat(BoardSquare target) {
+		
+		target.getListOfPawnOn().get(0).ToString();
+		moveAtHome(target.getListOfPawnOn().get(0));
+		
+	}
+	
 	/****
 	 *
 	 * @param pawn
@@ -597,10 +640,13 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	public void moveAndEat(Pawn pawn){
 		
 		BoardSquare targetSquare = this.boardPanel.getPath().getPathMap().get((pawn.getCurrentSquare().getiD()+this.diceNumber)%52);
-		targetSquare.eatOppositPawn();
-		move(pawn,(pawn.getCurrentSquare().getiD()+this.diceNumber)%52);
-		pawn.setNbSquareTraveled(pawn.getNbSquareTraveled() + this.diceNumber);
+		System.out.println("targetToEat = "+targetSquare.ToString());
 		addLogsAndNotification("Player n°"+pawn.getPlayerID()+" move his pawn n°"+pawn.getPawnID());
+		
+		eat(targetSquare);
+		move(pawn,targetSquare.getiD());
+		pawn.setNbSquareTraveled(pawn.getNbSquareTraveled() + this.diceNumber);
+		
 	}
 
 	/****
@@ -656,6 +702,17 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		targetPawn.setNbSquareTraveled(targetPawn.getNbSquareTraveled() + this.diceNumber);
 	}
 
+	
+	public boolean isBlockOnStartSquare(Player player) {
+		
+		return player.getStartSquare().HowManyPawn() > 0;
+	}
+	
+	
+	
+	
+	
+	
 	/****
 	 *
 	 * @param pawn
@@ -668,8 +725,14 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	public boolean pawnCanBePlay(Pawn pawn){
 
 		if(IsInHome(pawn)){
-			return diceto6();
-
+			
+			if (isBlockOnStartSquare(this.boardPanel.getPlayers().get(pawn.getPlayerID()-1))) {
+				System.out.println("There is a block on your startsquare");
+				return false;
+			}else {
+				return diceto6();
+			}
+			
 		}else{
 
 			if(isBlockOnWay(pawn)){
@@ -715,31 +778,25 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	
 		if(canMovePawn(currentPlayer)){
 			
-			if (this.diceto6() && APawnIsInHome(currentPlayer)!=null ) {
+			if (this.diceto6() && APawnIsInHome(currentPlayer)!=null && isBlockOnStartSquare(currentPlayer)) {
 				
-				System.out.println("premier if");
 				moveOutHome(APawnIsInHome(currentPlayer));
 			}else{
 				
 				if(canFinish(currentPlayer)!=null){
 					MoveInFinalSquare(canFinish(currentPlayer));
-					System.out.println("deuxieme if");
 	
 				}else if(canEat(currentPlayer)!=null){
 					moveAndEat(canEat(currentPlayer));
-					System.out.println("troisieme if");
 	
 				}else if(canGoFinalSquares()!=null){
 					moveFinalSquares(canGoFinalSquares());
-					System.out.println("coooool");
 	
 				}else if(canDoaBloc()!=null){
 					moveForaBloc(canDoaBloc());
-					System.out.println("quatre if");
 	
 				}else{
 					playTheDefaultPawn();
-					System.out.println("cinq if");
 				}
 			}
 		}
@@ -761,9 +818,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 * change the current player
 	 */
 	public void changeCurrentPlayer(){
-		System.out.println(this.currentPlayer);
 		this.currentPlayer=boardPanel.getPlayers().get((this.currentPlayer)%4).getPlayerID();
-		System.out.println(this.currentPlayer);
 	}
 
 	/**

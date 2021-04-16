@@ -36,13 +36,7 @@ public class Pawn{
 	public void setHitBox() {
 		this.hitBox = new Rectangle(this.currentSquare.getxOnBoard(), this.currentSquare.getyOnBoard(),w, h);
 	}
-	
-	public void moveHitBox() {
-		this.hitBox.x = this.currentSquare.getxOnBoard();
-		this.hitBox.y = this.currentSquare.getyOnBoard();
-	}
-	
-	
+		
 	public void DrawPawn(Graphics g, Player player) {
 		switch(player.getPlayerID()) {
 		case 1:
