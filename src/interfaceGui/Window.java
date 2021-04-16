@@ -323,6 +323,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 
 		for(int i=1; i<this.diceNumber+1; i++) {
 			if(path.getPathMap().get((pawn.getCurrentSquare().getiD()+i)%52).HowManyPawn() == 2 && path.getPathMap().get((pawn.getCurrentSquare().getiD()+i)%52).getIdOfPlayerOn() != pawn.getPlayerID()) {
+				System.out.println("Block on path");
 				return true;
 			}
 		}
@@ -521,7 +522,6 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		pawn.setCurrentSquare(targetSquare);
 		pawn.setHitBox();
 		System.out.println("new = "+pawn.getCurrentSquare().ToString());
-		System.out.println("old2 = "+old.ToString());
 	}
 	
 	

@@ -61,7 +61,7 @@ public class Pawn{
 	}
 	
 	public String ToString() {
-		return "pawn n°"+this.getPawnID()+" of the player n°"+this.playerID+" on the point: x="+this.currentSquare.getxOnBoard()+" y="+this.currentSquare.getyOnBoard();
+		return "pawn n°"+this.getPawnID()+" of the player n°"+this.playerID+" nbSquaresTraveled = "+this.getNbSquareTraveled();
 	}
 	
 	public boolean isAtHome() {
