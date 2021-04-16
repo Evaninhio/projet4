@@ -202,7 +202,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 * 
 	 */
 	
-	//repère
+
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -705,13 +705,9 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	
 	public boolean isBlockOnStartSquare(Player player) {
 		
-		return player.getStartSquare().HowManyPawn() > 0;
+		return player.getStartSquare().HowManyPawn() > 1;
 	}
-	
-	
-	
-	
-	
+		
 	
 	/****
 	 *
@@ -743,7 +739,6 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 			}
 		}
 	}
-	
 	
 	/****
 	 *
@@ -778,24 +773,29 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	
 		if(canMovePawn(currentPlayer)){
 			
-			if (this.diceto6() && APawnIsInHome(currentPlayer)!=null && isBlockOnStartSquare(currentPlayer)) {
-				
+			if (this.diceto6() && APawnIsInHome(currentPlayer)!=null && !isBlockOnStartSquare(currentPlayer)) {
+				System.out.println("cond1");
 				moveOutHome(APawnIsInHome(currentPlayer));
 			}else{
 				
 				if(canFinish(currentPlayer)!=null){
+					System.out.println("cond2");
 					MoveInFinalSquare(canFinish(currentPlayer));
-	
+					
 				}else if(canEat(currentPlayer)!=null){
+					System.out.println("cond3");
 					moveAndEat(canEat(currentPlayer));
 	
 				}else if(canGoFinalSquares()!=null){
+					System.out.println("cond4");
 					moveFinalSquares(canGoFinalSquares());
 	
 				}else if(canDoaBloc()!=null){
+					System.out.println("cond5");
 					moveForaBloc(canDoaBloc());
 	
 				}else{
+					System.out.println("cond6");
 					playTheDefaultPawn();
 				}
 			}
