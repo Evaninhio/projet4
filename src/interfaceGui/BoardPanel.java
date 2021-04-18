@@ -19,7 +19,7 @@ public class BoardPanel extends JPanel{
 	/* Constructors */
 	public BoardPanel() {
 
-		this.layout = new Layout(30, 30, 25);
+		this.layout = new Layout(30, 30, 0);
 		this.setPath(new Path());
 
 		this.setPlayers(new ArrayList<Player>(4));
@@ -34,6 +34,18 @@ public class BoardPanel extends JPanel{
 
 	/* Methods */
 
+	
+	public String ranking() {
+		
+		String ranking = "";
+		
+		for(Player player: this.getPlayers()) {
+			ranking = ranking + player.getPseudo()+" is "+player.getRank()+"ème\n";
+		}
+		return ranking;
+	}
+	
+	
 	public void paintComponent(Graphics g) {
 
 		for(int i=0;i<52;i++) {

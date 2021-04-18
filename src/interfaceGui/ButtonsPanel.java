@@ -28,6 +28,7 @@ public class ButtonsPanel extends JPanel{
 		
 		this.dicePanel = new JPanel();
 		this.dicePanel.setLayout(new GridLayout(3,1));
+		this.dicePanel.setVisible(false);
 		DiceButtonInitializer();
 		DiceLabelInitilizer();
 		PassButtonInitializer();
@@ -53,7 +54,7 @@ public class ButtonsPanel extends JPanel{
 	
 	private void PassButtonInitializer() {
 		this.passButton = new JButton("Pass");
-		this.diceButton.setPreferredSize(new Dimension(100,50));
+		this.passButton.setPreferredSize(new Dimension(100,50));
 		
 	}
 }

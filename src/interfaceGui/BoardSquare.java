@@ -25,8 +25,23 @@ public class BoardSquare {
 		this.setxOnBoard(NewXOnBoard);
 		this.setyOnBoard(NewYOnBoard);
 		this.setListOfPawnOn(new ArrayList<Pawn>(2));
-		this.nbPawnOn = 0;
+		
+		boardSquareInitializer();
 	}
+	
+	/* Methods */
+	
+	public void boardSquareInitializer() {
+		this.nbPawnOn = 0;
+		this.idOfPlayerOn = 0;
+	}
+	
+	public void homeSquareInitializer(int ID) {
+		this.nbPawnOn = 1;
+		this.idOfPlayerOn = ID;
+	}
+	
+	
 	
 	public void drawBoardSquare(Graphics g) {
 		
@@ -101,7 +116,7 @@ public class BoardSquare {
 	
 	public String ToString() {
 		return "iD = "+this.getiD()+" nbPawnOn = "+this.HowManyPawn()+" IdOfPlayerOn = "+this.getIdOfPlayerOn()+"\n"
-				+" sizeOfList = "+this.getListOfPawnOn().size();
+				+"sizeOfList = "+this.getListOfPawnOn().size();
 	}
 	
 	

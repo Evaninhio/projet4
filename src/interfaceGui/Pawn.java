@@ -23,8 +23,12 @@ public class Pawn{
 	public Pawn(int newPlayerID, int newPawnID) {
 		this.setPlayerID(newPlayerID);
 		this.setPawnID(newPawnID);
-		this.setNbSquareTraveled(0);
 		
+		pawnInitializer();
+	}
+	
+	public void pawnInitializer() {
+		this.setNbSquareTraveled(0);
 	}
 
 	/* Methods */

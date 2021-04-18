@@ -28,13 +28,14 @@ public class TopPanel extends JPanel{
 		this.startGame.setPreferredSize(new Dimension(100, 50));
 		this.add(this.startGame);
 		
-				
+			
 		this.notification = new JLabel();
 		this.notification.setPreferredSize(new Dimension(300, 50));
 		this.notification.setForeground(Color.WHITE);
 		this.notification.setHorizontalAlignment(SwingConstants.CENTER);
 		this.notification.setVerticalAlignment(SwingConstants.CENTER);
 		this.notification.setFont(new Font("Verdana", Font.PLAIN, 18));
+		this.notification.setVisible(false);
 		this.add(this.notification);		
 		
 	}

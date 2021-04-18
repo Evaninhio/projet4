@@ -8,27 +8,29 @@ public class Player{
 	
 	/*Attributes*/
 	int w = Layout.w, h = Layout.h, offset = Layout.offset;
-	private int playerID;
-	private List<Pawn> pawn;
-	private List<BoardSquare> homeSquare;
-	private HashMap<Integer,BoardSquare> finalSquare;
-	private BoardSquare startSquare;
-	private boolean win;
-	private int firstRoll;
+	private int playerID;		//The player ID (1,2,3,4)
+	private List<Pawn> pawn;		//The list of 4 pawns of the player
+	private List<BoardSquare> homeSquare;		//The 4 squares in home
+	private HashMap<Integer,BoardSquare> finalSquare;		//The final line of the player
+	private BoardSquare startSquare;	//The square where the pawn of the player go on when they leave home
+	private int firstRoll;		//The first dice number that the player roll to decide who will start the game
+	private int rank;		//The rank of the player at the end of the game
+	private String pseudo;
+	private int typeOfPlayer;
+	
+	
+	
 	
 	/*Constructors*/
-	public Player() {}
 	
 	public Player(int newPlayerID) {
 		
 		this.setPlayerID(newPlayerID);
-		this.win=false;
 		this.setPawn(new ArrayList<Pawn>(4));
 		this.getPawn().add(new Pawn(this.getPlayerID(), 1));
 		this.getPawn().add(new Pawn(this.getPlayerID(), 2));
 		this.getPawn().add(new Pawn(this.getPlayerID(), 3));
 		this.getPawn().add(new Pawn(this.getPlayerID(), 4));
-		
 		this.homeSquare = new ArrayList<BoardSquare>(4);
 		this.setFinalSquare(new HashMap<Integer, BoardSquare>(4));
 		
@@ -78,11 +80,27 @@ public class Player{
 		for(int i=0; i<4; i++) {
 			this.getPawn().get(i).setHomeSquare(this.homeSquare.get(i));
 		}
+		
+		
+		playerInitializer();
+	}
+	
+	public String ToString() {
+		return "playerID = "+this.getPlayerID()+" pseudo =  "+this.getPseudo()+" typeOfPlayer = "+this.typeOfPlayer;
+	}
+	
+	public void playerInitializer() {
+		
 		for(Pawn pawn : this.getPawn()) {
 			pawn.setCurrentSquare(pawn.getHomeSquare());
 			pawn.setHitBox();
 		}
+
+		this.setRank(0);
+		this.setFirstRoll(0);
+		this.setPseudo(null);
 	}
+		
 	
 	public void DrawPlayer(Graphics g) {
 		switch(this.playerID) {
@@ -126,7 +144,10 @@ public class Player{
 		}
 	}
 
-
+	public boolean hasFinishedGame(){
+		
+		return this.getFinalSquare().get((this.getPlayerID()*100)+16).HowManyPawn()== 4;
+	}
 
 
 	/*Getter and Setter*/
@@ -163,10 +184,7 @@ public class Player{
 
 		this.finalSquare = finalSquare;
 	}
-	public boolean getWin(){
-		return this.win;
-	}
-
+	
 	public int getFirstRoll() {
 		return firstRoll;
 	}
@@ -177,5 +195,38 @@ public class Player{
 
 	public List<BoardSquare> getHomeSquare() {
 		return homeSquare;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+
+
+	public String getPseudo() {
+		return pseudo;
+	}
+
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+
+
+	public int getTypeOfPlayer() {
+		return typeOfPlayer;
+	}
+
+
+	public void setTypeOfPlayer(String typeOfPlayer) {
+		
+		if(typeOfPlayer == "AI") {
+			this.typeOfPlayer = 1;
+		}else {
+			this.typeOfPlayer = 2;
+		}
 	}
 }
