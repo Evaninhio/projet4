@@ -71,17 +71,7 @@ public class BoardSquare {
 	
 	/* Methods */
 	
-	public void eatOppositPawn() {
-		this.listOfPawnOn.get(0).setCurrentSquare(this.listOfPawnOn.get(0).getHomeSquare());
-		this.listOfPawnOn.get(0).setNbSquareTraveled(0);
-		removePawn();
-	}
-	
-	public boolean isOppositePawnOnTargetSquare(int id) {
-		return nbPawnOn > 0 && idOfPlayerOn != id;
-	}
-	
-	
+		
 	public void AddPawn(Pawn pawn) {
 		this.listOfPawnOn.add(pawn);
 		this.nbPawnOn++;

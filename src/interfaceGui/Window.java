@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
@@ -318,13 +319,72 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 *
 	 */
 	
-	public boolean isBlockOnWay(Pawn pawn) {
-		Path path = this.boardPanel.getPath();
+	public boolean isBlockOnWay(Pawn pawn, HashMap<Integer, BoardSquare> path) {
+				
+		if(pawn.hasAllPathTraveled(this.diceNumber)) {		//If the player will be on the final line or is on the final line
+			
+			
+			int finalSquareOfPathID = this.boardPanel.getPlayers().get(pawn.getPlayerID()-1).getStartSquare().getiD()-2;
 
-		for(int i=1; i<this.diceNumber+1; i++) {
-			if(path.getPathMap().get((pawn.getCurrentSquare().getiD()+i)%52).HowManyPawn() == 2 && path.getPathMap().get((pawn.getCurrentSquare().getiD()+i)%52).getIdOfPlayerOn() != pawn.getPlayerID()) {
-				System.out.println("Block on path");
-				return true;
+			
+			
+			if(pawn.getCurrentSquare().getiD() == finalSquareOfPathID) {		//If the player is on the square just before the final line
+			
+				for(int i=1; i<this.diceNumber+1;i++) {		//For each square of the final line until the target square
+					if(this.boardPanel.getPlayers().get(pawn.getPlayerID()-1).getFinalSquare().get(100*pawn.getPlayerID()+10+i).HowManyPawn() == 2) {
+
+						return true;
+					}
+				}				
+				
+			}else if(pawn.getCurrentSquare().getiD() < 52) {		//If the player will be on the final line
+				
+				//System.out.println("dice = "+this.diceNumber);
+				//System.out.println("pawn = "+pawn.ToString());
+				//System.out.println("Id of current square"+pawn.getCurrentSquare().getiD());
+				
+				int diceBefore = 50-pawn.getNbSquareTraveled();
+				//System.out.println("diceBefore = "+diceBefore);
+				
+				int diceAfter = this.diceNumber-diceBefore;
+				//System.out.println("restOfDice = "+diceAfter);
+				
+				for(int i=1; i<diceBefore+1; i++) {		//For each square before the final line
+					if(path.get((pawn.getCurrentSquare().getiD()+i)%52).HowManyPawn() == 2) {
+						
+						return true;
+					}
+				}
+				
+				for(int i=1; i<diceAfter+1;i++) {		//For each square of the final line until the target square
+					
+					
+					if(this.boardPanel.getPlayers().get(pawn.getPlayerID()-1).getFinalSquare().get((100*pawn.getPlayerID())+10+i).HowManyPawn() == 2) {
+						
+						return true;
+					}
+				}
+				
+				
+				
+			}else{		//If the player is on the final square
+				
+				for(int i=1; i<this.diceNumber+1;i++) {		//For each square of the final line until the target square
+					if(this.boardPanel.getPlayers().get(pawn.getPlayerID()-1).getFinalSquare().get(100*pawn.getPlayerID()+10+i).HowManyPawn() == 2) {
+
+						return true;
+					}
+				}
+			}
+			
+		}else {		//If the player is on the path and the target square too
+			
+			for(int i=1; i<this.diceNumber+1; i++) {
+				
+				if(path.get((pawn.getCurrentSquare().getiD()+i)%52).HowManyPawn() == 2) {
+
+					return true;
+				}
 			}
 		}
 
@@ -482,7 +542,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	
 	public void MoveInFinalSquare(Pawn pawn){
 		move(pawn,this.boardPanel.getPlayers().get(this.currentPlayer-1).getFinalSquare().get(100 * this.currentPlayer + 16).getiD() );
-		pawn.setNbSquareTraveled(pawn.getNbSquareTraveled()+1);
+		pawn.setNbSquareTraveled(pawn.getNbSquareTraveled()+this.diceNumber);
 		addLogsAndNotification("Player n°"+pawn.getPlayerID()+" move in final square his pawn n°"+pawn.getPawnID());
 	}
 
@@ -497,13 +557,8 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 
 	public void move(Pawn pawn, int IDSquare){
 		
-		BoardSquare targetSquare = null;
-		BoardSquare old = pawn.getCurrentSquare();
+		BoardSquare targetSquare = null;				
 		
-		System.out.println("Pawn to move = "+pawn.ToString());
-		System.out.println("Id of target square = "+IDSquare);		
-		
-		System.out.println("old = "+old.ToString());
 		if(IDSquare/100 > 0 && IDSquare%100 > 10){
 			targetSquare = this.boardPanel.getPlayers().get(this.currentPlayer-1).getFinalSquare().get(IDSquare);
 		}else if(IDSquare > 100 && IDSquare < 105){
@@ -517,11 +572,10 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		}else {
 			targetSquare = this.boardPanel.getPath().getPathMap().get(IDSquare);
 		}
-		System.out.println("target = "+targetSquare.ToString());
+				
 		pawn.getCurrentSquare().removePawn();
 		pawn.setCurrentSquare(targetSquare);
 		pawn.setHitBox();
-		System.out.println("new = "+pawn.getCurrentSquare().ToString());
 	}
 	
 	
@@ -589,7 +643,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	public Pawn canEat(Player player) {
 	
 		for (Pawn pawn : player.getPawn()) {
-			if (isOppositePawnOnTargetSquare(this.boardPanel.getPlayers().get(this.currentPlayer-1), this.boardPanel.getPath().getPathMap().get((pawn.getCurrentSquare().getiD()+this.diceNumber)%52)) && pawnCanBePlay(pawn) && !isBlockOnWay(pawn)) {  //If there is an opposite pawn on the target square
+			if (isOppositePawnOnTargetSquare(this.boardPanel.getPlayers().get(this.currentPlayer-1), this.boardPanel.getPath().getPathMap().get((pawn.getCurrentSquare().getiD()+this.diceNumber)%52)) && pawnCanBePlay(pawn) && !isBlockOnWay(pawn, this.boardPanel.getPath().getPathMap()) && pawn.hasAllPathTraveled(this.diceNumber) == false) {  //If there is an opposite pawn on the target square
 				return pawn;
 			}
 		}
@@ -640,9 +694,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	public void moveAndEat(Pawn pawn){
 		
 		BoardSquare targetSquare = this.boardPanel.getPath().getPathMap().get((pawn.getCurrentSquare().getiD()+this.diceNumber)%52);
-		System.out.println("targetToEat = "+targetSquare.ToString());
 		addLogsAndNotification("Player n°"+pawn.getPlayerID()+" move his pawn n°"+pawn.getPawnID());
-		
 		eat(targetSquare);
 		move(pawn,targetSquare.getiD());
 		pawn.setNbSquareTraveled(pawn.getNbSquareTraveled() + this.diceNumber);
@@ -702,12 +754,34 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		targetPawn.setNbSquareTraveled(targetPawn.getNbSquareTraveled() + this.diceNumber);
 	}
 
+	/****
+	 *
+	 * @param player
+	 * @return boolean
+	 * 
+	 * Return true if there is a block on the start square of the player in parameter, else return false 
+	 *
+	 */
 	
 	public boolean isBlockOnStartSquare(Player player) {
 		
 		return player.getStartSquare().HowManyPawn() > 1;
 	}
 		
+	/****
+	 *
+	 * @param pawn
+	 * @return boolean
+	 * 
+	 * Return true if the pawn is in the final square of the final line 
+	 *
+	 */
+	
+	public boolean isOnFinalSquare(Pawn pawn) {
+		return pawn.getCurrentSquare().getiD()%100 == 16 && pawn.getCurrentSquare().getiD() > 51;
+	}
+	
+	
 	
 	/****
 	 *
@@ -719,21 +793,32 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 */
 	
 	public boolean pawnCanBePlay(Pawn pawn){
-
-		if(IsInHome(pawn)){
+		
+		if(isOnFinalSquare(pawn)) {
+			return false;
+		
+		}else if(IsInHome(pawn)){    //If the pawn is at home
 			
 			if (isBlockOnStartSquare(this.boardPanel.getPlayers().get(pawn.getPlayerID()-1))) {
-				System.out.println("There is a block on your startsquare");
+				
 				return false;
 			}else {
 				return diceto6();
 			}
 			
-		}else{
-
-			if(isBlockOnWay(pawn)){
-				return false;
-
+		}else if(IsInFinalsSquares(pawn)) { 	//If the pawn is in the final line
+			
+			if(isBlockOnWay(pawn, this.boardPanel.getPlayers().get(pawn.getPlayerID()-1).getFinalSquare())) {
+					
+					return false;
+			}else {
+				return pawn.getCurrentSquare().getiD() + this.diceNumber < this.boardPanel.getPlayers().get(this.currentPlayer - 1).getFinalSquare().get((100 * (this.currentPlayer) + 16)).getiD();
+			}
+			
+		}else {		//If the pawn is on the path			
+			
+			if(isBlockOnWay(pawn, this.boardPanel.getPath().getPathMap())){
+					return false;
 			}else {
 				return pawn.getCurrentSquare().getiD() + this.diceNumber < this.boardPanel.getPlayers().get(this.currentPlayer - 1).getFinalSquare().get((100 * (this.currentPlayer) + 16)).getiD();
 			}
@@ -749,8 +834,16 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 */
 	
 	public void moveOutHome(Pawn pawn){
-			move(pawn, this.boardPanel.getPlayers().get(this.currentPlayer-1).getStartSquare().getiD());
-			addLogsAndNotification("Player n°"+pawn.getPlayerID()+" move out of home his pawn n°"+pawn.getPawnID());
+		
+		BoardSquare targetSquare = this.boardPanel.getPlayers().get(this.currentPlayer-1).getStartSquare();
+		
+		if(targetSquare.HowManyPawn() == 1) {
+			eat(targetSquare);
+		}
+		
+		move(pawn, targetSquare.getiD());
+		addLogsAndNotification("Player n°"+pawn.getPlayerID()+" move out of home his pawn n°"+pawn.getPawnID());
+		
 	}
 	
 	
@@ -773,7 +866,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	
 		if(canMovePawn(currentPlayer)){
 			
-			if (this.diceto6() && APawnIsInHome(currentPlayer)!=null && !isBlockOnStartSquare(currentPlayer)) {
+			if (this.diceto6() && APawnIsInHome(currentPlayer)!=null && isBlockOnStartSquare(currentPlayer) == false) {
 				System.out.println("cond1");
 				moveOutHome(APawnIsInHome(currentPlayer));
 			}else{
@@ -800,6 +893,13 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 				}
 			}
 		}
+		
+		System.out.println("Player = "+currentPlayer.getPlayerID());
+		for ( Pawn pawn : currentPlayer.getPawn()){
+			System.out.println(pawn.ToString());
+			System.out.println(pawn.getCurrentSquare().ToString());
+		}
+		System.out.println("\n\n");
 	}
 	
 	
