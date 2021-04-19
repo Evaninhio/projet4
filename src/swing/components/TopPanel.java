@@ -1,4 +1,4 @@
-package interfaceGui;
+package swing.components;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -30,7 +30,7 @@ public class TopPanel extends JPanel{
 		
 			
 		this.notification = new JLabel();
-		this.notification.setPreferredSize(new Dimension(300, 50));
+		this.notification.setPreferredSize(new Dimension(500, 50));
 		this.notification.setForeground(Color.WHITE);
 		this.notification.setHorizontalAlignment(SwingConstants.CENTER);
 		this.notification.setVerticalAlignment(SwingConstants.CENTER);

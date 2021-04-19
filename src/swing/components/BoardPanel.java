@@ -1,4 +1,4 @@
-package interfaceGui;
+package swing.components;
 
 
 import java.awt.Dimension;
@@ -6,6 +6,11 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+
+import game.components.Layout;
+import game.components.Path;
+import game.components.Pawn;
+import game.components.Player;
 
 public class BoardPanel extends JPanel{
 

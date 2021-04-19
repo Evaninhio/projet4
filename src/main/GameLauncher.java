@@ -1,4 +1,6 @@
-package interfaceGui;
+package main;
+
+import swing.components.Window;
 
 public class GameLauncher{
 	

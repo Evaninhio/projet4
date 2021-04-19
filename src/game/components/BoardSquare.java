@@ -1,4 +1,4 @@
-package interfaceGui;
+package game.components;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -14,6 +14,7 @@ public class BoardSquare {
 	private int yOnBoard;
 	private int nbPawnOn;
 	private int idOfPlayerOn;
+	private boolean isSafe;
 	private List<Pawn> listOfPawnOn;
 	
 	
@@ -25,6 +26,12 @@ public class BoardSquare {
 		this.setxOnBoard(NewXOnBoard);
 		this.setyOnBoard(NewYOnBoard);
 		this.setListOfPawnOn(new ArrayList<Pawn>(2));
+		
+		if(iD == 10 || iD == 23 || iD == 36 || iD == 49) {
+			this.setSafe(true);
+		}else {
+			this.setSafe(false);
+		}
 		
 		boardSquareInitializer();
 	}
@@ -49,12 +56,19 @@ public class BoardSquare {
 		
 		if(player == 1 || this.iD == 2) {
 			g.setColor(Color.BLUE);
+			
 		}else if(player == 2 || this.iD == 15) {
 			g.setColor(Color.YELLOW);
+			
 		}else if(player == 3 || this.iD == 28) {
 			g.setColor(Color.RED);
+			
 		}else if(player == 4 || this.iD == 41) { 
 			g.setColor(Color.GREEN);
+			
+		}else if(this.isSafe == true) {
+			g.setColor(Color.CYAN);
+			
 		}else {
 			g.setColor(Color.WHITE);
 		}
@@ -63,18 +77,8 @@ public class BoardSquare {
 			g.setColor(Color.MAGENTA);
 		}
 		
-		if(this.nbPawnOn > 2) {
-			g.setColor(Color.PINK);
-		}
 		
-		if(this.nbPawnOn < 0) {
-			g.setColor(Color.CYAN);
-		}
-		
-		if(this.nbPawnOn == 1) {
-			g.setColor(Color.ORANGE);
-		}
-		
+								
 		g.fillRect(this.xOnBoard, this.yOnBoard, w, h);
 		g.setColor(Color.BLACK);
 		g.drawRect(this.xOnBoard, this.yOnBoard, w, h);
@@ -168,5 +172,13 @@ public class BoardSquare {
 
 	public void setListOfPawnOn(List<Pawn> listOfPawnOn) {
 		this.listOfPawnOn = listOfPawnOn;
+	}
+
+	public boolean isSafe() {
+		return isSafe;
+	}
+
+	public void setSafe(boolean isSafe) {
+		this.isSafe = isSafe;
 	}
 }

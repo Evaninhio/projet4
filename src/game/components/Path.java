@@ -1,4 +1,4 @@
-package interfaceGui;
+package game.components;
 
 import java.util.*;
 

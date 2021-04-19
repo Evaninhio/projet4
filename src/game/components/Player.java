@@ -1,4 +1,4 @@
-package interfaceGui;
+package game.components;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -16,7 +16,7 @@ public class Player{
 	private int firstRoll;		//The first dice number that the player roll to decide who will start the game
 	private int rank;		//The rank of the player at the end of the game
 	private String pseudo;
-	private int typeOfPlayer;
+	private int typeOfPlayer;  //1==AI && 2==Player
 	
 	
 	
@@ -80,7 +80,6 @@ public class Player{
 		for(int i=0; i<4; i++) {
 			this.getPawn().get(i).setHomeSquare(this.homeSquare.get(i));
 		}
-		
 		
 		playerInitializer();
 	}

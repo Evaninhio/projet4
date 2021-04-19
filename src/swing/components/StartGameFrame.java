@@ -1,4 +1,4 @@
-package interfaceGui;
+package swing.components;
 
 import java.awt.GridLayout;
 import java.beans.PropertyVetoException;

@@ -1,8 +1,9 @@
-package interfaceGui;
+package swing.components;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.beans.PropertyVetoException;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -34,6 +35,7 @@ public class GameOverFrame extends JInternalFrame{
 		
 		
 		this.rankTextArea = new JTextArea();
+		this.rankTextArea.setFont(new Font("Verdana", Font.PLAIN, 16));
 		this.rankTextArea.setOpaque(true);
 		this.rankTextArea.setBackground(Color.RED);
 		this.rankTextArea.setPreferredSize(new Dimension(150, 250));
