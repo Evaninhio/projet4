@@ -16,6 +16,7 @@ public class ButtonsPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	public JButton diceButton;
 	public JButton passButton;
+	public JButton rageQuit;
 	public JLabel diceLabel;
 	public JPanel dicePanel;
 	
@@ -27,17 +28,29 @@ public class ButtonsPanel extends JPanel{
 		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		
 		this.dicePanel = new JPanel();
-		this.dicePanel.setLayout(new GridLayout(3,1));
+		this.dicePanel.setLayout(new GridLayout(4,1));
 		this.dicePanel.setVisible(false);
 		DiceButtonInitializer();
 		DiceLabelInitilizer();
 		PassButtonInitializer();
+		RageQuitInitializer();
+		
 		this.dicePanel.add(this.diceButton);
 		this.dicePanel.add(this.diceLabel);
 		this.dicePanel.add(this.passButton);
+		this.dicePanel.add(this.rageQuit);
 		
 		this.add(dicePanel);
+		
+		
 	}
+	
+	private void RageQuitInitializer() {
+		this.rageQuit = new JButton("Rage Quit");
+		this.rageQuit.setPreferredSize(new Dimension(100,50));
+	}
+	
+	
 	
 	private void DiceLabelInitilizer() {
 		this.diceLabel = new JLabel();

@@ -45,7 +45,7 @@ public class BoardPanel extends JPanel{
 		String ranking = "";
 		
 		for(Player player: this.getPlayers()) {
-			ranking = ranking + player.getPseudo()+" is "+player.getRank()+"ème\n";
+			ranking = ranking + player.getPseudo()+" is "+player.getRank()+"th\n";
 		}
 		return ranking;
 	}
@@ -79,6 +79,8 @@ public class BoardPanel extends JPanel{
 				pawn.DrawPawn(g, player);
 			}
 		}
+		
+		
 		this.layout.draw(g);
 	}
 

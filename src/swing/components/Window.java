@@ -29,6 +29,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	private int currentPlayer;
 	private int manage;
 	private int currentRank;
+	
 	/**
 	 * variable can manage the screen with different values
 	 * values:
@@ -74,6 +75,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		this.topPanel.startGame.addActionListener(this);
 		this.buttonsPanel.diceButton.addActionListener(this);
 		this.buttonsPanel.passButton.addActionListener(this);
+		this.buttonsPanel.rageQuit.addActionListener(this);
 		this.desktopFrame.gameOverInternalFrame.quit.addActionListener(this);
 		this.desktopFrame.gameOverInternalFrame.newGame.addActionListener(this);
 		this.boardPanel.addMouseListener(this);
@@ -230,6 +232,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 				this.topPanel.notification.setVisible(true);
 				this.desktopFrame.startGameInternalFrame.setVisible(false);
 				this.desktopFrame.scoreBoardInternalFrame.setVisible(true);
+				this.topPanel.notification.setVisible(true);
 
 
 				firstTurn();
@@ -246,7 +249,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		}else if(e.getSource() == this.desktopFrame.gameOverInternalFrame.quit) {
 			System.exit(0);
 			
-		}else if(e.getSource() == this.desktopFrame.gameOverInternalFrame.newGame) {
+		}else if(e.getSource() == this.desktopFrame.gameOverInternalFrame.newGame || e.getSource() == this.buttonsPanel.rageQuit) {
 			
 			gameInitializer();
 			this.manage = 0;
@@ -287,11 +290,12 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		
 		this.desktopFrame.gameOverInternalFrame.setVisible(false);
 		this.desktopFrame.startGameInternalFrame.setVisible(true);
-		
+		this.desktopFrame.scoreBoardInternalFrame.setVisible(false);
 		
 		this.topPanel.startGame.setVisible(true);
 		this.buttonsPanel.diceLabel.setText("0");
 		this.topPanel.notification.setText(null);
+		this.topPanel.notification.setVisible(false);
 		this.bottomPanel.log.setText(null);
 		
 		this.repaint();

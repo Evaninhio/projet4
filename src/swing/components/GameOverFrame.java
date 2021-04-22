@@ -37,7 +37,7 @@ public class GameOverFrame extends JInternalFrame{
 		this.rankTextArea = new JTextArea();
 		this.rankTextArea.setFont(new Font("Verdana", Font.PLAIN, 16));
 		this.rankTextArea.setOpaque(true);
-		this.rankTextArea.setBackground(Color.RED);
+		this.rankTextArea.setBackground(Color.PINK);
 		this.rankTextArea.setPreferredSize(new Dimension(150, 250));
 		this.panel.add(this.rankTextArea);
 		

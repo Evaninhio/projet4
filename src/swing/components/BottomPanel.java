@@ -24,6 +24,7 @@ public class BottomPanel extends JPanel {
 		
 		
 		this.log = new JTextArea();
+		this.log.setText(null);
 		this.log.setText("Game Logs");
 		this.log.setLineWrap(true);
 		this.log.setWrapStyleWord(true);
