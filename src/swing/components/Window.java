@@ -19,31 +19,112 @@ import game.components.Player;
 
 public class Window extends JFrame implements ActionListener, MouseListener{
 
+
 	private static final long serialVersionUID = 1L;
+	
+	/***
+	 *
+	 * this attribute is the game board and it contains all the elements of the game (players, pawns, path etc)
+	 * <p>
+	 */
+	
 	private final BoardPanel boardPanel;
+	
+	/***
+	 *
+	 * This attribute is the panel <mark>(JPanel)</mark> on the right of the this class(JFrame),
+	 * <p>it contains the buttons : 
+	 * <li>roll dice 
+	 * <li>pass 
+	 * <li>rage quit.
+	 * <p>
+	 * 
+	 */
+	
 	private final ButtonsPanel buttonsPanel;
+	
+	/***
+	 *
+	 * This attribute is the panel <mark>(JPanel)</mark> on the top of this class(JFrame),
+	 * <p>it contains the button : start game
+	 * <br>it contains the label : notification 
+	 * <p>
+	 */
+	
 	private final TopPanel topPanel;
+	
+	/***
+	 *
+	 * This attribute is the panel <mark>(JPanel)</mark> at the bottom of this class (JFrame),
+	 * <p>it contains a JScrollPane which contains the logs (JTextArea)
+	 * <p>
+	 */
 	private final BottomPanel bottomPanel;
+	
+	/**
+	 *
+	 *This attribute is the desktop panel <mark>(JDesktopPane)</mark> on the left of this class (JFrame),
+	 *<p>it contains 3 JInternalFrame which are visible or not according to the state of the game:
+	 *<li>StartGameFrame: allow to choose the player pseudo and type (AI or IRL)
+	 *<li>ScoreBoardFrame: allow to see the current score of each player
+	 *<li>GameOverFrame: allow to decide to play a new game or to quit the game
+	 *<p>
+	 */
+	
 	private final DesktopFrame desktopFrame;
+	
+	/**
+	 *
+	 *This attribute is the <mark>current number of the dice
+	 *<p>
+	 *
+	 */
 	private int diceNumber;
+	
+	/**
+	 * 
+	 * This attribute is the <mark>ID of the current player
+	 * <li> 1 -> Blue
+	 * <li> 2 -> Yellow
+	 * <li> 3 -> Red
+	 * <li> 4 -> Green
+	 * <p>
+	 */
+	
 	private int currentPlayer;
-	private int manage;
-	private int currentRank;
 	
 	/**
 	 * variable can manage the screen with different values
 	 * values:
 	 * 		
-	 * 		 0 : we can start the game
-	 * 		10 : we can do the first roll turn to decide which one is the first player
-	 * 		15 : last roll of the first roll turn
-	 *		20 : we can throw the dice
-	 *		30 : we can select a pawn
-	 *		40 : we can pass
-	 *		50 : game over 
-	 *
+	 * 		 <li>0 : we can start the game
+	 * 		<li>10 : we can do the first roll turn to decide which one is the first player
+	 * 		<li>15 : last roll of the first roll turn
+	 *		<li>20 : we can throw the dice
+	 *		<li>30 : we can select a pawn
+	 *		<li>40 : we can pass
+	 *		<li>50 : game over 
+	 * <p>
 	 */
 	
+	private int manage;
+	
+	/**
+	 *
+	 * This attribute is the currentRank:
+	 * <br>When a player has finish, this integer is incremented (currentRank++)
+	 * <p>
+	 */
+	private int currentRank;
+	
+	
+	/**
+	 *
+	 * This is the constructor of the JFrame
+	 * <br>It create a GUI and allow the players to begin a new game
+	 * <p>
+	 *
+	 */
 	
 	public Window(){
 		
@@ -86,7 +167,13 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		windowInitializer();
 	}
 	
-		
+	/***
+	 *
+	 * This method initialize to default the attributes of this class.
+	 * <p>
+	 *  
+	 */
+	
 	public void windowInitializer() {
 		this.manage=0;
 		this.currentRank = 0;
@@ -94,7 +181,12 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		this.diceNumber = 0;
 	}
 
-	
+	/**
+	 *
+	 * This method manage the first turn, which decide which player will be the first to play (the player which roll the highest number) 
+	 * <p>
+	 * 
+	 */
 	public void firstTurn() {
 		
 		System.out.println("first turn");
@@ -137,7 +229,12 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		}
 	}
 	
-	
+	/***
+	 *
+	 * If the current player is an AI, the method calls IATurn(), 
+	 * else it set the attribute manage to 20 so the player can roll the dice.
+	 * <p>
+	 */
 	
 	
 	public void turn() {
@@ -163,6 +260,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	 * @param e
 	 * if it is not the start of the game we throw the dice
 	 * else we set the dice at 0 and the player at player 2
+	 * <p>
 	 */
 	
 	
@@ -260,7 +358,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	/****
 	 *
 	 * Reset to default all objects of the game
-	 *
+	 * <p>
 	 */
 	
 	public void gameInitializer() {
@@ -306,7 +404,7 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 	/****
 	 *
 	 * set the attribute dice number of this class with a random number between 1 and 6
-	 *
+	 * <p>
 	 */
 
 	public void diceRoll() {
@@ -315,7 +413,12 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		this.buttonsPanel.diceLabel.setText("" + this.diceNumber);
 	}
 	
-	
+	/**
+	 *
+	 * This method set the pseudo of each player and set them in the ScoreBoardFrame
+	 * <p>
+	 *
+	 */
 	
 	
 	public void pseudoAndTypePlayer() {
@@ -345,13 +448,12 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 
 	/****
 	 *
-	 * @param rollPlayer1
-	 * @param rollPlayer2
-	 * @param rollPlayer3
-	 * @param rollPlayer4
-	 * @return firstPlayer
+	 * @param rollPlayer1 : the number rolled by the player 1 during the first turn 
+	 * @param rollPlayer2 : the number rolled by the player 2 during the first turn
+	 * @param rollPlayer3 : the number rolled by the player 3 during the first turn
+	 * @param rollPlayer4 : the number rolled by the player 4 during the first turn
+	 * @return firstPlayer : the player which will be the first to play the game
 	 * 
-	 * Return the player which will be the first to play the game
 	 *
 	 */
 	
@@ -372,6 +474,13 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 
 	     return firstPlayer;
 	}
+	
+	/***
+	 *
+	 * @param str : a string
+	 * @return This method add the text in parameter to the notification bar and the logs textArea
+	 * 
+	 */
 
 	public void addLogsAndNotification(String str) {
 		this.bottomPanel.log.append("\n"+str);
@@ -458,7 +567,14 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		}
 	}
 
-	
+	/***
+	 *
+	 * @param pawn : instance of Pawn
+	 * @param player : instance of Player
+	 * 
+	 * manage the movement of the pawn in parameter if the player is a real player
+	 * 
+	 */
 
 	public void moveIfPlayerType2(Pawn pawn, Player player) {
 		
@@ -483,15 +599,11 @@ public class Window extends JFrame implements ActionListener, MouseListener{
 		}
 	}
 	
-	
-	
-
-	
 	/***
 	 *
 	 * @param player
 	 * @param targetSquare
-	 * @return true if there is an opposite pawn on the target square
+	 * @return true if there is an opposite pawn on the target square, else return false
 	 * 
 	 */
 	
